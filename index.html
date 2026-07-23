@@ -2,23 +2,29 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#F3EDDF">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#F6E9CE">
+<meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Lombardi Pétanque">
 <title>Lombardi Pétanque — Compteur de points</title>
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='46' fill='%236d7278' stroke='%2322201C' stroke-width='6'/><circle cx='38' cy='36' r='14' fill='%23cfd2d6' opacity='.7'/></svg>">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><g stroke='%2322201C' stroke-width='7' stroke-linecap='round'><line id='r' x1='50' y1='5' x2='50' y2='19'/><use href='%23r' transform='rotate(45 50 50)'/><use href='%23r' transform='rotate(90 50 50)'/><use href='%23r' transform='rotate(135 50 50)'/><use href='%23r' transform='rotate(180 50 50)'/><use href='%23r' transform='rotate(225 50 50)'/><use href='%23r' transform='rotate(270 50 50)'/><use href='%23r' transform='rotate(315 50 50)'/></g><circle cx='50' cy='50' r='23' fill='%23F0A31C' stroke='%2322201C' stroke-width='6'/></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Italiana&family=Archivo:wght@500;600;700;900&display=swap" rel="stylesheet">
 <style>
 :root{
+  --azzurro:#1C6BB3;
+  --azzurro-scuro:#0F3D68;
+  --giallo:#F5B301;
+  --giallo-scuro:#8A5900;
+  --sole:#F0A31C;
   --verde:#00764A;
-  --verde-scuro:#0A3B27;
   --rosso:#CE2B37;
   --rosso-scuro:#7E1B23;
-  --sabbia:#F3EDDF;
-  --sabbia-scura:#E4D9C2;
+  --sabbia:#F6E9CE;
+  --sabbia-scura:#EADCBB;
   --ink:#22201C;
   --acciaio-1:#D5D8DC;
   --acciaio-2:#63686F;
@@ -26,27 +32,43 @@
 }
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 [hidden]{display:none!important}
-html{height:100%}
+html{height:100%;-webkit-text-size-adjust:100%}
+html,body{overscroll-behavior:none}
 body{
   font-family:'Archivo',system-ui,sans-serif;
   color:var(--ink);
-  background:var(--sabbia);
+  background-color:var(--sabbia);
   background-image:
+    radial-gradient(130% 80% at 50% -12%, rgba(240,163,28,.24), rgba(240,163,28,0) 60%),
     radial-gradient(rgba(34,32,28,.07) 1.1px, transparent 1.6px),
     radial-gradient(rgba(34,32,28,.045) 1px, transparent 1.5px);
-  background-size:26px 26px, 17px 17px;
-  background-position:0 0, 9px 13px;
+  background-size:100% 100%, 26px 26px, 17px 17px;
+  background-position:0 0, 0 0, 9px 13px;
+  background-repeat:no-repeat, repeat, repeat;
   min-height:100dvh;
   display:flex;flex-direction:column;
+  touch-action:manipulation;
+  -webkit-user-select:none;user-select:none;
+  -webkit-touch-callout:none;
+  padding-top:env(safe-area-inset-top);
+  padding-left:env(safe-area-inset-left);
+  padding-right:env(safe-area-inset-right);
 }
+input{-webkit-user-select:text;user-select:text}
 button{font-family:inherit;cursor:pointer;touch-action:manipulation}
 button:focus-visible,input:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
 
 /* ---------- Header ---------- */
-.top{text-align:center;padding:22px 16px 6px}
+.top{text-align:center;padding:18px 16px 6px}
+.sole{
+  display:block;width:58px;height:58px;margin:0 auto 2px;
+  filter:drop-shadow(2px 2px 0 rgba(34,32,28,.35));
+}
+.sole .raggi{transform-box:fill-box;transform-origin:center;animation:girare 70s linear infinite}
+@keyframes girare{to{transform:rotate(360deg)}}
 .overline{
   font-size:.68rem;font-weight:700;letter-spacing:.32em;text-transform:uppercase;
-  color:rgba(34,32,28,.55);
+  color:rgba(34,32,28,.55);margin-top:6px;
 }
 h1{
   font-family:'Italiana',serif;font-weight:400;
@@ -80,17 +102,17 @@ main{flex:1;width:100%;max-width:780px;margin:0 auto;padding:16px 12px 8px}
   display:flex;flex-direction:column;
 }
 .band{height:12px;margin:0 -10px 12px}
-.team.verde .band{background:var(--verde)}
-.team.rosso .band{background:var(--rosso)}
+.team.azzurro .band{background:var(--azzurro)}
+.team.giallo .band{background:var(--giallo)}
 .name{
   width:100%;border:none;background:transparent;text-align:center;
-  font-family:inherit;font-weight:700;font-size:1.06rem;color:var(--ink);
+  font-family:inherit;font-weight:700;font-size:max(1.06rem,16px);color:var(--ink);
   border-bottom:2px dashed rgba(34,32,28,.28);
   padding:2px 4px 6px;border-radius:0;
 }
 .name::placeholder{color:rgba(34,32,28,.35)}
-.team.verde .name:focus-visible{border-bottom:2px solid var(--verde);outline:none}
-.team.rosso .name:focus-visible{border-bottom:2px solid var(--rosso);outline:none}
+.team.azzurro .name:focus-visible{border-bottom:2px solid var(--azzurro);outline:none}
+.team.giallo .name:focus-visible{border-bottom:2px solid var(--giallo-scuro);outline:none}
 .hint{font-size:.62rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:rgba(34,32,28,.4);margin-top:5px}
 .score{
   font-weight:900;font-variant-numeric:tabular-nums;line-height:1;
@@ -99,8 +121,8 @@ main{flex:1;width:100%;max-width:780px;margin:0 auto;padding:16px 12px 8px}
   transition:transform .12s ease;
 }
 .score.pop{transform:scale(1.12)}
-.team.verde .score{color:var(--verde-scuro)}
-.team.rosso .score{color:var(--rosso-scuro)}
+.team.azzurro .score{color:var(--azzurro-scuro)}
+.team.giallo .score{color:var(--giallo-scuro)}
 .btns{display:flex;flex-direction:column;gap:8px;margin-top:auto}
 .add{
   height:62px;border-radius:99px;border:2.5px solid var(--ink);
@@ -108,11 +130,11 @@ main{flex:1;width:100%;max-width:780px;margin:0 auto;padding:16px 12px 8px}
   box-shadow:4px 4px 0 var(--ink);
   transition:transform .06s ease, box-shadow .06s ease;
 }
-.team.verde .add{background:var(--verde)}
-.team.rosso .add{background:var(--rosso)}
+.team.azzurro .add{background:var(--azzurro)}
+.team.giallo .add{background:var(--giallo);color:var(--ink)}
 .add:active{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--ink)}
 .sub{
-  height:40px;border-radius:99px;border:2px solid rgba(34,32,28,.35);
+  height:46px;border-radius:99px;border:2px solid rgba(34,32,28,.35);
   background:transparent;color:rgba(34,32,28,.65);
   font-size:.95rem;font-weight:700;
 }
@@ -148,22 +170,26 @@ main{flex:1;width:100%;max-width:780px;margin:0 auto;padding:16px 12px 8px}
 /* ---------- Contrôles ---------- */
 .controls{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:18px}
 .ghost,.danger{
-  padding:13px 20px;border-radius:99px;font-weight:700;font-size:.92rem;
+  min-height:46px;padding:13px 20px;border-radius:99px;font-weight:700;font-size:.92rem;
   border:2px solid var(--ink);background:#fff;color:var(--ink);
   box-shadow:3px 3px 0 var(--ink);
-  transition:transform .06s ease, box-shadow .06s ease;
+  transition:transform .06s ease, box-shadow .06s ease, background .12s ease, color .12s ease;
 }
 .ghost:active,.danger:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--ink)}
 .danger{background:transparent;border-color:rgba(126,27,35,.55);color:var(--rosso-scuro);box-shadow:none}
+.danger.confirming{background:var(--rosso);border-color:var(--ink);color:#fff;box-shadow:3px 3px 0 var(--ink)}
 
-footer{text-align:center;padding:16px 12px 22px;font-size:.72rem;font-weight:600;color:rgba(34,32,28,.45);letter-spacing:.06em}
+footer{text-align:center;padding:16px 12px calc(22px + env(safe-area-inset-bottom));font-size:.72rem;font-weight:600;color:rgba(34,32,28,.45);letter-spacing:.06em}
 
 /* ---------- Victoire ---------- */
 .overlay{
   position:fixed;inset:0;z-index:50;
-  background:rgba(243,237,223,.97);
+  background:
+    radial-gradient(120% 70% at 50% -10%, rgba(240,163,28,.28), rgba(240,163,28,0) 60%),
+    linear-gradient(rgba(246,233,206,.97), rgba(246,233,206,.97));
   display:flex;flex-direction:column;align-items:center;justify-content:center;
-  text-align:center;padding:24px;gap:6px;
+  text-align:center;gap:6px;
+  padding:calc(24px + env(safe-area-inset-top)) 24px calc(24px + env(safe-area-inset-bottom));
 }
 .ov-over{font-size:.8rem;font-weight:700;letter-spacing:.4em;text-transform:uppercase;color:rgba(34,32,28,.55)}
 .ov-name{
@@ -194,6 +220,22 @@ footer{text-align:center;padding:16px 12px 22px;font-size:.72rem;font-weight:600
 @media (prefers-reduced-motion: reduce){
   .confetti span{animation:none;display:none}
   .score{transition:none}
+  .sole .raggi{animation:none}
+}
+
+/* ---------- Paysage téléphone : tout tient sans scroller ---------- */
+@media (orientation:landscape) and (max-height:520px){
+  .top{padding:8px 16px 2px}
+  .sole{width:34px;height:34px;margin-bottom:0}
+  h1{font-size:2rem}
+  .tricolore{margin:6px auto 8px}
+  .rule{font-size:.7rem;padding:4px 12px}
+  .hint{display:none}
+  .score{font-size:clamp(3.2rem,18vh,5rem);margin:2px 0 8px}
+  .add{height:52px;font-size:1.3rem}
+  .sub{height:40px}
+  .wins{margin-top:8px;padding-top:8px}
+  .controls{margin-top:12px}
 }
 
 @media (min-width:640px){
@@ -206,6 +248,29 @@ footer{text-align:center;padding:16px 12px 22px;font-size:.72rem;font-weight:600
 <body>
 
 <header class="top">
+  <svg class="sole" viewBox="0 0 100 100" aria-hidden="true" focusable="false">
+    <defs>
+      <radialGradient id="gsole" cx="35%" cy="30%" r="75%">
+        <stop offset="0" stop-color="#FFD978"/>
+        <stop offset="1" stop-color="#F0A31C"/>
+      </radialGradient>
+    </defs>
+    <g class="raggi" stroke="#22201C" stroke-width="5.5" stroke-linecap="round">
+      <line id="raggio" x1="50" y1="5" x2="50" y2="18"/>
+      <use href="#raggio" transform="rotate(30 50 50)"/>
+      <use href="#raggio" transform="rotate(60 50 50)"/>
+      <use href="#raggio" transform="rotate(90 50 50)"/>
+      <use href="#raggio" transform="rotate(120 50 50)"/>
+      <use href="#raggio" transform="rotate(150 50 50)"/>
+      <use href="#raggio" transform="rotate(180 50 50)"/>
+      <use href="#raggio" transform="rotate(210 50 50)"/>
+      <use href="#raggio" transform="rotate(240 50 50)"/>
+      <use href="#raggio" transform="rotate(270 50 50)"/>
+      <use href="#raggio" transform="rotate(300 50 50)"/>
+      <use href="#raggio" transform="rotate(330 50 50)"/>
+    </g>
+    <circle cx="50" cy="50" r="24" fill="url(#gsole)" stroke="#22201C" stroke-width="5"/>
+  </svg>
   <p class="overline">Bocce · Pétanque · Famiglia</p>
   <h1>Lombardi Pétanque</h1>
   <div class="tricolore" aria-hidden="true"><span></span><span></span><span></span></div>
@@ -215,14 +280,14 @@ footer{text-align:center;padding:16px 12px 22px;font-size:.72rem;font-weight:600
 <main>
   <section class="board" aria-label="Tableau des scores">
 
-    <article class="team verde">
+    <article class="team azzurro">
       <div class="band"></div>
-      <input class="name" id="nameA" value="Squadra Pasta" maxlength="18" aria-label="Nom de l'équipe verte" enterkeyhint="done">
+      <input class="name" id="nameA" value="Squadra Azzurra" maxlength="18" aria-label="Nom de l'équipe bleue" enterkeyhint="done" autocomplete="off" autocorrect="off" autocapitalize="words" spellcheck="false">
       <p class="hint">Toucher pour renommer</p>
       <div class="score" id="scoreA" aria-live="polite">0</div>
       <div class="btns">
-        <button class="add" id="addA" aria-label="Ajouter un point à l'équipe verte">+1 point</button>
-        <button class="sub" id="subA" aria-label="Retirer un point à l'équipe verte">−1</button>
+        <button class="add" id="addA" aria-label="Ajouter un point à l'équipe bleue">+1 point</button>
+        <button class="sub" id="subA" aria-label="Retirer un point à l'équipe bleue">−1</button>
       </div>
       <div class="wins">
         <span class="boule" id="winsA">0</span>
@@ -235,14 +300,14 @@ footer{text-align:center;padding:16px 12px 22px;font-size:.72rem;font-weight:600
       <span class="vs">VS</span>
     </div>
 
-    <article class="team rosso">
+    <article class="team giallo">
       <div class="band"></div>
-      <input class="name" id="nameB" value="Squadra Azzurra" maxlength="18" aria-label="Nom de l'équipe rouge" enterkeyhint="done">
+      <input class="name" id="nameB" value="Squadra Limone" maxlength="18" aria-label="Nom de l'équipe jaune" enterkeyhint="done" autocomplete="off" autocorrect="off" autocapitalize="words" spellcheck="false">
       <p class="hint">Toucher pour renommer</p>
       <div class="score" id="scoreB" aria-live="polite">0</div>
       <div class="btns">
-        <button class="add" id="addB" aria-label="Ajouter un point à l'équipe rouge">+1 point</button>
-        <button class="sub" id="subB" aria-label="Retirer un point à l'équipe rouge">−1</button>
+        <button class="add" id="addB" aria-label="Ajouter un point à l'équipe jaune">+1 point</button>
+        <button class="sub" id="subB" aria-label="Retirer un point à l'équipe jaune">−1</button>
       </div>
       <div class="wins">
         <span class="boule" id="winsB">0</span>
@@ -258,7 +323,7 @@ footer{text-align:center;padding:16px 12px 22px;font-size:.72rem;font-weight:600
   </section>
 </main>
 
-<footer>Fatto con ♥ — Famiglia Lombardi</footer>
+<footer>Fatto con ♥ e sole — Famiglia Lombardi</footer>
 
 <div class="overlay" id="overlay" hidden>
   <div class="confetti" id="confetti" aria-hidden="true"></div>
@@ -276,8 +341,10 @@ footer{text-align:center;padding:16px 12px 22px;font-size:.72rem;font-weight:600
 
 <script>
 (function(){
-  var state = { a:{score:0,wins:0}, b:{score:0,wins:0} };
   var MAX = 13;
+  var KEY = 'lombardi-petanque-v2';
+  var RESET_LABEL = 'Tout remettre à zéro';
+  var state = { a:{score:0,wins:0}, b:{score:0,wins:0} };
 
   var el = function(id){ return document.getElementById(id); };
   var scoreA=el('scoreA'), scoreB=el('scoreB'),
@@ -285,9 +352,57 @@ footer{text-align:center;padding:16px 12px 22px;font-size:.72rem;font-weight:600
       overlay=el('overlay'), winnerName=el('winnerName'),
       loserScore=el('loserScore'),
       ovWinsA=el('ovWinsA'), ovWinsB=el('ovWinsB'),
-      nameA=el('nameA'), nameB=el('nameB');
+      nameA=el('nameA'), nameB=el('nameB'),
+      resetBtn=el('resetAll');
 
-  function buzz(ms){ if (navigator.vibrate) { try{ navigator.vibrate(ms); }catch(e){} } }
+  /* ---------- Persistance (silencieuse si le stockage est indisponible) ---------- */
+  function bound(v, max){
+    v = parseInt(v, 10);
+    if (isNaN(v) || v < 0) return 0;
+    return Math.min(v, max);
+  }
+
+  function load(){
+    try{
+      var raw = localStorage.getItem(KEY);
+      if (!raw) return;
+      var s = JSON.parse(raw);
+      if (!s || !s.a || !s.b) return;
+      state.a.score = bound(s.a.score, MAX);
+      state.b.score = bound(s.b.score, MAX);
+      state.a.wins  = bound(s.a.wins, 9999);
+      state.b.wins  = bound(s.b.wins, 9999);
+      /* Une partie terminée avant la fermeture repart de zéro */
+      if (state.a.score >= MAX || state.b.score >= MAX){
+        state.a.score = 0; state.b.score = 0;
+      }
+      if (s.names){
+        if (typeof s.names.a === 'string') nameA.value = s.names.a.slice(0, 18);
+        if (typeof s.names.b === 'string') nameB.value = s.names.b.slice(0, 18);
+      }
+    }catch(e){}
+  }
+
+  function save(){
+    try{
+      localStorage.setItem(KEY, JSON.stringify({
+        a: state.a,
+        b: state.b,
+        names: { a: nameA.value, b: nameB.value }
+      }));
+    }catch(e){}
+  }
+
+  /* ---------- Écran allumé pendant la partie ---------- */
+  function keepAwake(){
+    try{
+      if ('wakeLock' in navigator){
+        navigator.wakeLock.request('screen').catch(function(){});
+      }
+    }catch(e){}
+  }
+
+  function buzz(p){ if (navigator.vibrate) { try{ navigator.vibrate(p); }catch(e){} } }
 
   function pop(node){
     node.classList.remove('pop');
@@ -302,11 +417,12 @@ footer{text-align:center;padding:16px 12px 22px;font-size:.72rem;font-weight:600
     winsB.textContent = state.b.wins;
     ovWinsA.textContent = state.a.wins;
     ovWinsB.textContent = state.b.wins;
+    save();
   }
 
   function teamName(t){
     var input = (t==='a') ? nameA : nameB;
-    var fallback = (t==='a') ? 'Squadra Pasta' : 'Squadra Azzurra';
+    var fallback = (t==='a') ? 'Squadra Azzurra' : 'Squadra Limone';
     return input.value.trim() || fallback;
   }
 
@@ -327,7 +443,7 @@ footer{text-align:center;padding:16px 12px 22px;font-size:.72rem;font-weight:600
   function confetti(){
     var box = el('confetti');
     box.innerHTML = '';
-    var colors = ['#00764A', '#FFFFFF', '#CE2B37', '#D9822B'];
+    var colors = ['#1C6BB3', '#F5B301', '#FFFFFF', '#00764A', '#CE2B37', '#F0A31C'];
     for (var i=0; i<46; i++){
       var s = document.createElement('span');
       s.style.left = (Math.random()*100) + '%';
@@ -342,7 +458,7 @@ footer{text-align:center;padding:16px 12px 22px;font-size:.72rem;font-weight:600
     var other = (t==='a') ? 'b' : 'a';
     state[t].wins++;
     winnerName.textContent = teamName(t);
-    winnerName.style.color = (t==='a') ? 'var(--verde-scuro)' : 'var(--rosso-scuro)';
+    winnerName.style.color = (t==='a') ? 'var(--azzurro-scuro)' : 'var(--giallo-scuro)';
     loserScore.textContent = state[other].score;
     render();
     overlay.hidden = false;
@@ -364,10 +480,23 @@ footer{text-align:center;padding:16px 12px 22px;font-size:.72rem;font-weight:600
   el('newGame').addEventListener('click', newGame);
   el('nextGame').addEventListener('click', newGame);
 
-  el('resetAll').addEventListener('click', function(){
-    if (confirm('Remettre les scores ET les parties gagnées à zéro ?')){
+  /* ---------- Remise à zéro en deux touches ---------- */
+  var resetTimer = null;
+  function disarmReset(){
+    clearTimeout(resetTimer);
+    resetBtn.classList.remove('confirming');
+    resetBtn.textContent = RESET_LABEL;
+  }
+  resetBtn.addEventListener('click', function(){
+    if (resetBtn.classList.contains('confirming')){
+      disarmReset();
       state = { a:{score:0,wins:0}, b:{score:0,wins:0} };
       render();
+      buzz(30);
+    } else {
+      resetBtn.classList.add('confirming');
+      resetBtn.textContent = 'Confirmer ?';
+      resetTimer = setTimeout(disarmReset, 2600);
     }
   });
 
@@ -375,9 +504,20 @@ footer{text-align:center;padding:16px 12px 22px;font-size:.72rem;font-weight:600
     input.addEventListener('keydown', function(e){
       if (e.key === 'Enter'){ input.blur(); }
     });
+    input.addEventListener('input', save);
   });
 
+  /* ---------- Cycle de vie mobile ---------- */
+  document.addEventListener('visibilitychange', function(){
+    if (document.visibilityState === 'visible'){ keepAwake(); }
+    else { save(); }
+  });
+  window.addEventListener('pagehide', save);
+  document.addEventListener('pointerdown', keepAwake, { once:true });
+
+  load();
   render();
+  keepAwake();
 })();
 </script>
 </body>
