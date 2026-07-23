@@ -11,8 +11,6 @@
 
 <title>Lombardi Pétanque — Compteur de points</title>
 
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><g stroke='%2322201C' stroke-width='7' stroke-linecap='round'><line id='r' x1='50' y1='5' x2='50' y2='19'/><use href='%23r' transform='rotate(45 50 50)'/><use href='%23r' transform='rotate(90 50 50)'/><use href='%23r' transform='rotate(135 50 50)'/><use href='%23r' transform='rotate(180 50 50)'/><use href='%23r' transform='rotate(225 50 50)'/><use href='%23r' transform='rotate(270 50 50)'/><use href='%23r' transform='rotate(315 50 50)'/></g><circle cx='50' cy='50' r='23' fill='%23F0A31C' stroke='%2322201C' stroke-width='6'/></svg>">
-
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Italiana&family=Archivo:wght@500;600;700;900&display=swap" rel="stylesheet">
@@ -106,7 +104,7 @@ input:focus-visible{
   outline-offset:3px;
 }
 
-/* ---------- Porte d'entrée ---------- */
+/* Porte d'entrée */
 
 .locked header,
 .locked main,
@@ -210,7 +208,6 @@ input:focus-visible{
   font-weight:800;
   font-size:1.02rem;
   box-shadow:4px 4px 0 var(--ink);
-  transition:transform .06s ease,box-shadow .06s ease;
 }
 
 .gate-btn:active{
@@ -224,7 +221,7 @@ input:focus-visible{
   color:rgba(34,32,28,.5);
 }
 
-/* ---------- En-tête ---------- */
+/* En-tête */
 
 .top{
   text-align:center;
@@ -303,7 +300,7 @@ h1{
   box-shadow:3px 3px 0 var(--ink);
 }
 
-/* ---------- Tableau principal ---------- */
+/* Tableau principal */
 
 main{
   flex:1;
@@ -384,10 +381,6 @@ main{
   margin-top:5px;
 }
 
-/*
-  Taille réduite pour que 10, 11, 12 et 13
-  restent entièrement visibles.
-*/
 .score{
   width:100%;
   min-width:0;
@@ -430,7 +423,6 @@ main{
   font-weight:900;
   white-space:nowrap;
   box-shadow:4px 4px 0 var(--ink);
-  transition:transform .06s ease,box-shadow .06s ease;
 }
 
 .team.azzurro .add{
@@ -509,8 +501,6 @@ main{
     2px 3px 0 rgba(34,32,28,.5);
 }
 
-/* ---------- Milieu ---------- */
-
 .mid{
   display:flex;
   flex-direction:column;
@@ -540,7 +530,7 @@ main{
   color:rgba(34,32,28,.5);
 }
 
-/* ---------- Contrôles ---------- */
+/* Contrôles */
 
 .controls{
   display:flex;
@@ -561,11 +551,6 @@ main{
   background:#fff;
   color:var(--ink);
   box-shadow:3px 3px 0 var(--ink);
-  transition:
-    transform .06s ease,
-    box-shadow .06s ease,
-    background .12s ease,
-    color .12s ease;
 }
 
 .ghost:active,
@@ -588,7 +573,15 @@ main{
   box-shadow:3px 3px 0 var(--ink);
 }
 
-/* ---------- Historique ---------- */
+.ghost.confirming,
+#nextGame.confirming{
+  background:var(--giallo);
+  color:var(--ink);
+  border-color:var(--ink);
+  box-shadow:4px 4px 0 var(--ink);
+}
+
+/* Historique */
 
 .history{
   width:100%;
@@ -707,91 +700,7 @@ main{
   color:rgba(34,32,28,.5);
 }
 
-/*
-  Sur téléphone, chaque ligne devient une petite fiche.
-  Le tableau est alors entièrement visible sans être tronqué.
-*/
-@media (max-width:600px){
-  .history{
-    border-radius:16px;
-    box-shadow:5px 5px 0 rgba(34,32,28,.85);
-  }
-
-  .history-head{
-    padding:12px;
-  }
-
-  .history-scroll{
-    overflow:visible;
-    padding:10px;
-  }
-
-  .history-table,
-  .history-table tbody,
-  .history-table tr,
-  .history-table td{
-    display:block;
-    width:100%;
-  }
-
-  .history-table thead{
-    display:none;
-  }
-
-  .history-table tr{
-    margin-bottom:10px;
-    padding:7px 10px;
-    border:1.5px solid var(--sabbia-scura);
-    border-radius:12px;
-    background:rgba(246,233,206,.32);
-  }
-
-  .history-table tr:last-child{
-    margin-bottom:0;
-  }
-
-  .history-table td{
-    min-height:28px;
-    padding:5px 0;
-    border-bottom:1px dashed rgba(34,32,28,.16);
-    display:grid;
-    grid-template-columns:92px minmax(0,1fr);
-    gap:8px;
-    align-items:center;
-    text-align:right;
-    font-size:.73rem;
-  }
-
-  .history-table td::before{
-    content:attr(data-label);
-    text-align:left;
-    font-size:.57rem;
-    font-weight:800;
-    letter-spacing:.06em;
-    text-transform:uppercase;
-    color:rgba(34,32,28,.52);
-  }
-
-  .history-table td:last-child{
-    border-bottom:none;
-  }
-
-  .history-table .num,
-  .history-table .date,
-  .history-table .team-a,
-  .history-table .team-b,
-  .history-table .score-cell,
-  .history-table .winner{
-    width:100%;
-    text-align:right;
-  }
-
-  .history-table .score-cell{
-    font-size:.85rem;
-  }
-}
-
-/* ---------- Pied de page ---------- */
+/* Pied de page */
 
 footer{
   text-align:center;
@@ -805,7 +714,7 @@ footer{
   letter-spacing:.06em;
 }
 
-/* ---------- Écran de victoire ---------- */
+/* Écran de victoire */
 
 .overlay{
   position:fixed;
@@ -916,22 +825,85 @@ footer{
   }
 }
 
-@media (prefers-reduced-motion:reduce){
-  .gate-card.err{
-    animation:none;
+/* Historique mobile */
+
+@media (max-width:600px){
+  .history{
+    border-radius:16px;
+    box-shadow:5px 5px 0 rgba(34,32,28,.85);
   }
 
-  .confetti span{
-    animation:none;
+  .history-head{
+    padding:12px;
+  }
+
+  .history-scroll{
+    overflow:visible;
+    padding:10px;
+  }
+
+  .history-table,
+  .history-table tbody,
+  .history-table tr,
+  .history-table td{
+    display:block;
+    width:100%;
+  }
+
+  .history-table thead{
     display:none;
   }
 
-  .score{
-    transition:none;
+  .history-table tr{
+    margin-bottom:10px;
+    padding:7px 10px;
+    border:1.5px solid var(--sabbia-scura);
+    border-radius:12px;
+    background:rgba(246,233,206,.32);
   }
 
-  .sole .raggi{
-    animation:none;
+  .history-table tr:last-child{
+    margin-bottom:0;
+  }
+
+  .history-table td{
+    min-height:28px;
+    padding:5px 0;
+    border-bottom:1px dashed rgba(34,32,28,.16);
+    display:grid;
+    grid-template-columns:92px minmax(0,1fr);
+    gap:8px;
+    align-items:center;
+    text-align:right;
+    font-size:.73rem;
+  }
+
+  .history-table td::before{
+    content:attr(data-label);
+    text-align:left;
+    font-size:.57rem;
+    font-weight:800;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+    color:rgba(34,32,28,.52);
+  }
+
+  .history-table td:last-child{
+    border-bottom:none;
+  }
+
+  .history-table .num,
+  .history-table .date,
+  .history-table .team-a,
+  .history-table .team-b,
+  .history-table .score-cell,
+  .history-table .winner{
+    width:100%;
+    text-align:right;
+  }
+
+  .history-table .score-cell{
+    font-size:.85rem;
   }
 }
 
@@ -1000,7 +972,6 @@ footer{
   .sole{
     width:34px;
     height:34px;
-    margin-bottom:0;
   }
 
   h1{
@@ -1057,6 +1028,25 @@ footer{
     margin:0 -18px 14px;
   }
 }
+
+@media (prefers-reduced-motion:reduce){
+  .gate-card.err{
+    animation:none;
+  }
+
+  .confetti span{
+    animation:none;
+    display:none;
+  }
+
+  .score{
+    transition:none;
+  }
+
+  .sole .raggi{
+    animation:none;
+  }
+}
 </style>
 </head>
 
@@ -1102,7 +1092,6 @@ footer{
     class="sole"
     viewBox="0 0 100 100"
     aria-hidden="true"
-    focusable="false"
   >
     <defs>
       <radialGradient id="gsole" cx="35%" cy="30%" r="75%">
@@ -1186,19 +1175,11 @@ footer{
       </div>
 
       <div class="btns">
-        <button
-          class="add"
-          id="addA"
-          aria-label="Ajouter un point à l'équipe bleue"
-        >
+        <button class="add" id="addA">
           +1 point
         </button>
 
-        <button
-          class="sub"
-          id="subA"
-          aria-label="Retirer un point à l'équipe bleue"
-        >
+        <button class="sub" id="subA">
           −1
         </button>
       </div>
@@ -1242,19 +1223,11 @@ footer{
       </div>
 
       <div class="btns">
-        <button
-          class="add"
-          id="addB"
-          aria-label="Ajouter un point à l'équipe jaune"
-        >
+        <button class="add" id="addB">
           +1 point
         </button>
 
-        <button
-          class="sub"
-          id="subB"
-          aria-label="Retirer un point à l'équipe jaune"
-        >
+        <button class="sub" id="subB">
           −1
         </button>
       </div>
@@ -1319,11 +1292,7 @@ footer{
 </footer>
 
 <div class="overlay" id="overlay" hidden>
-  <div
-    class="confetti"
-    id="confetti"
-    aria-hidden="true"
-  ></div>
+  <div class="confetti" id="confetti"></div>
 
   <p class="ov-over">
     Fin de partie
@@ -1341,7 +1310,7 @@ footer{
     13 — <span id="loserScore">0</span>
   </p>
 
-  <div class="ov-boules" aria-hidden="true">
+  <div class="ov-boules">
     <span class="boule" id="ovWinsA">0</span>
     <span class="vs">·</span>
     <span class="boule" id="ovWinsB">0</span>
@@ -1358,12 +1327,13 @@ footer{
   var HISTORY_LIMIT = 100;
 
   var KEY = 'lombardi-petanque-v2';
+  var GATE_KEY = 'lombardi-gate-v1';
+
   var RESET_LABEL = 'Tout remettre à zéro';
+  var NEW_GAME_LABEL = 'Nouvelle partie';
 
   var GATE_HASH =
     'c9845444dee871c93f2d2d33a691daa7a5c75b10f504efc91a03dcb3882744f9';
-
-  var GATE_KEY = 'lombardi-gate-v1';
 
   var state = {
     a:{
@@ -1379,14 +1349,17 @@ footer{
 
   var gameFinished = false;
 
-  var el = function(id){
+  function el(id){
     return document.getElementById(id);
-  };
+  }
 
   var scoreA = el('scoreA');
   var scoreB = el('scoreB');
   var winsA = el('winsA');
   var winsB = el('winsB');
+
+  var nameA = el('nameA');
+  var nameB = el('nameB');
 
   var overlay = el('overlay');
   var winnerName = el('winnerName');
@@ -1394,9 +1367,8 @@ footer{
   var ovWinsA = el('ovWinsA');
   var ovWinsB = el('ovWinsB');
 
-  var nameA = el('nameA');
-  var nameB = el('nameB');
-
+  var newGameBtn = el('newGame');
+  var nextGameBtn = el('nextGame');
   var resetBtn = el('resetAll');
 
   var gate = el('gate');
@@ -1408,8 +1380,6 @@ footer{
   var historyEmpty = el('historyEmpty');
   var historyTable = el('historyTable');
   var historyCount = el('historyCount');
-
-  /* ---------- Outils ---------- */
 
   function bound(value,max){
     value = parseInt(value,10);
@@ -1439,8 +1409,6 @@ footer{
 
     return input.value.trim() || fallback;
   }
-
-  /* ---------- Persistance locale ---------- */
 
   function load(){
     try{
@@ -1501,7 +1469,6 @@ footer{
                   'Squadra Azzurra',
                   18
                 ),
-
                 score:bound(
                   game.teamA && game.teamA.score,
                   MAX
@@ -1514,7 +1481,6 @@ footer{
                   'Squadra Limone',
                   18
                 ),
-
                 score:bound(
                   game.teamB && game.teamB.score,
                   MAX
@@ -1543,12 +1509,10 @@ footer{
         JSON.stringify({
           a:state.a,
           b:state.b,
-
           names:{
             a:nameA.value,
             b:nameB.value
           },
-
           history:state.history
         })
       );
@@ -1560,8 +1524,6 @@ footer{
     }
   }
 
-  /* ---------- Écran allumé ---------- */
-
   function keepAwake(){
     try{
       if('wakeLock' in navigator){
@@ -1571,8 +1533,6 @@ footer{
       }
     }catch(error){}
   }
-
-  /* ---------- Vibrations et animations ---------- */
 
   function buzz(pattern){
     if(navigator.vibrate){
@@ -1584,13 +1544,9 @@ footer{
 
   function pop(node){
     node.classList.remove('pop');
-
     void node.offsetWidth;
-
     node.classList.add('pop');
   }
-
-  /* ---------- Historique ---------- */
 
   function formatDate(isoDate){
     var date = new Date(isoDate);
@@ -1715,8 +1671,6 @@ footer{
     }
   }
 
-  /* ---------- Affichage ---------- */
-
   function render(){
     scoreA.textContent = state.a.score;
     scoreB.textContent = state.b.score;
@@ -1730,8 +1684,6 @@ footer{
     renderHistory();
     save();
   }
-
-  /* ---------- Gestion des points ---------- */
 
   function point(team,delta){
     if(gameFinished){
@@ -1773,8 +1725,6 @@ footer{
     }
   }
 
-  /* ---------- Confettis ---------- */
-
   function confetti(){
     var container = el('confetti');
 
@@ -1790,26 +1740,23 @@ footer{
     ];
 
     for(var index = 0; index < 46; index++){
-      var confettiPiece =
-        document.createElement('span');
+      var piece = document.createElement('span');
 
-      confettiPiece.style.left =
+      piece.style.left =
         (Math.random() * 100) + '%';
 
-      confettiPiece.style.background =
+      piece.style.background =
         colors[index % colors.length];
 
-      confettiPiece.style.animationDelay =
+      piece.style.animationDelay =
         (Math.random() * .7) + 's';
 
-      confettiPiece.style.animationDuration =
+      piece.style.animationDuration =
         (2.3 + Math.random() * 1.9) + 's';
 
-      container.appendChild(confettiPiece);
+      container.appendChild(piece);
     }
   }
-
-  /* ---------- Victoire ---------- */
 
   function win(team){
     var otherTeam =
@@ -1880,17 +1827,63 @@ footer{
     }
   );
 
-  el('newGame').addEventListener(
+  /* Confirmation nouvelle partie */
+
+  var newGameTimer = null;
+  var pendingNewGameButton = null;
+
+  function disarmNewGame(){
+    clearTimeout(newGameTimer);
+
+    if(pendingNewGameButton){
+      pendingNewGameButton.classList.remove(
+        'confirming'
+      );
+
+      pendingNewGameButton.textContent =
+        NEW_GAME_LABEL;
+    }
+
+    pendingNewGameButton = null;
+  }
+
+  function confirmNewGame(button){
+    if(button.classList.contains('confirming')){
+      disarmNewGame();
+      newGame();
+      buzz(20);
+      return;
+    }
+
+    disarmNewGame();
+
+    pendingNewGameButton = button;
+
+    button.classList.add('confirming');
+
+    button.textContent = 'Confirmer ?';
+
+    newGameTimer = setTimeout(
+      disarmNewGame,
+      2600
+    );
+  }
+
+  newGameBtn.addEventListener(
     'click',
-    newGame
+    function(){
+      confirmNewGame(newGameBtn);
+    }
   );
 
-  el('nextGame').addEventListener(
+  nextGameBtn.addEventListener(
     'click',
-    newGame
+    function(){
+      confirmNewGame(nextGameBtn);
+    }
   );
 
-  /* ---------- Remise à zéro ---------- */
+  /* Confirmation remise à zéro */
 
   var resetTimer = null;
 
@@ -1911,6 +1904,7 @@ footer{
         )
       ){
         disarmReset();
+        disarmNewGame();
 
         state = {
           a:{
@@ -1934,6 +1928,8 @@ footer{
 
         buzz(30);
       }else{
+        disarmNewGame();
+
         resetBtn.classList.add(
           'confirming'
         );
@@ -1948,8 +1944,6 @@ footer{
       }
     }
   );
-
-  /* ---------- Noms des équipes ---------- */
 
   [nameA,nameB].forEach(function(input){
     input.addEventListener(
@@ -1966,8 +1960,6 @@ footer{
       save
     );
   });
-
-  /* ---------- SHA-256 ---------- */
 
   function sha256hex(ascii){
     function rr(value,count){
@@ -2149,8 +2141,6 @@ footer{
     return result;
   }
 
-  /* ---------- Porte d'entrée ---------- */
-
   function unlocked(){
     try{
       return (
@@ -2220,8 +2210,6 @@ footer{
     }
   );
 
-  /* ---------- Cycle de vie mobile ---------- */
-
   document.addEventListener(
     'visibilitychange',
     function(){
@@ -2248,8 +2236,6 @@ footer{
       once:true
     }
   );
-
-  /* ---------- Démarrage ---------- */
 
   load();
   render();
