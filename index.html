@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#F3EDDF">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Lombardi Pétanque">
+<title>Lombardi Pétanque — Compteur de points</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='46' fill='%236d7278' stroke='%2322201C' stroke-width='6'/><circle cx='38' cy='36' r='14' fill='%23cfd2d6' opacity='.7'/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Italiana&family=Archivo:wght@500;600;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --verde:#00764A;
+  --verde-scuro:#0A3B27;
+  --rosso:#CE2B37;
+  --rosso-scuro:#7E1B23;
+  --sabbia:#F3EDDF;
+  --sabbia-scura:#E4D9C2;
+  --ink:#22201C;
+  --acciaio-1:#D5D8DC;
+  --acciaio-2:#63686F;
+  --cochonnet:#D9822B;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+[hidden]{display:none!important}
+html{height:100%}
+body{
+  font-family:'Archivo',system-ui,sans-serif;
+  color:var(--ink);
+  background:var(--sabbia);
+  background-image:
+    radial-gradient(rgba(34,32,28,.07) 1.1px, transparent 1.6px),
+    radial-gradient(rgba(34,32,28,.045) 1px, transparent 1.5px);
+  background-size:26px 26px, 17px 17px;
+  background-position:0 0, 9px 13px;
+  min-height:100dvh;
+  display:flex;flex-direction:column;
+}
+button{font-family:inherit;cursor:pointer;touch-action:manipulation}
+button:focus-visible,input:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
+
+/* ---------- Header ---------- */
+.top{text-align:center;padding:22px 16px 6px}
+.overline{
+  font-size:.68rem;font-weight:700;letter-spacing:.32em;text-transform:uppercase;
+  color:rgba(34,32,28,.55);
+}
+h1{
+  font-family:'Italiana',serif;font-weight:400;
+  font-size:clamp(2.4rem,9.5vw,3.6rem);
+  line-height:1.05;margin-top:2px;
+}
+.tricolore{
+  display:flex;width:118px;height:7px;margin:10px auto 12px;
+  border:2px solid var(--ink);border-radius:99px;overflow:hidden;
+}
+.tricolore span{flex:1}
+.tricolore span:nth-child(1){background:var(--verde)}
+.tricolore span:nth-child(2){background:#fff}
+.tricolore span:nth-child(3){background:var(--rosso)}
+.rule{
+  display:inline-block;font-size:.78rem;font-weight:700;
+  padding:5px 14px;border:2px solid var(--ink);border-radius:99px;
+  background:#fff;box-shadow:3px 3px 0 var(--ink);
+}
+
+/* ---------- Scoreboard ---------- */
+main{flex:1;width:100%;max-width:780px;margin:0 auto;padding:16px 12px 8px}
+.board{
+  display:grid;grid-template-columns:1fr auto 1fr;
+  gap:10px;align-items:stretch;
+}
+.team{
+  background:#fff;border:2.5px solid var(--ink);border-radius:20px;
+  box-shadow:7px 7px 0 rgba(34,32,28,.85);
+  padding:0 10px 16px;text-align:center;overflow:hidden;
+  display:flex;flex-direction:column;
+}
+.band{height:12px;margin:0 -10px 12px}
+.team.verde .band{background:var(--verde)}
+.team.rosso .band{background:var(--rosso)}
+.name{
+  width:100%;border:none;background:transparent;text-align:center;
+  font-family:inherit;font-weight:700;font-size:1.06rem;color:var(--ink);
+  border-bottom:2px dashed rgba(34,32,28,.28);
+  padding:2px 4px 6px;border-radius:0;
+}
+.name::placeholder{color:rgba(34,32,28,.35)}
+.team.verde .name:focus-visible{border-bottom:2px solid var(--verde);outline:none}
+.team.rosso .name:focus-visible{border-bottom:2px solid var(--rosso);outline:none}
+.hint{font-size:.62rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:rgba(34,32,28,.4);margin-top:5px}
+.score{
+  font-weight:900;font-variant-numeric:tabular-nums;line-height:1;
+  font-size:clamp(4.6rem,24vw,8.6rem);
+  margin:6px 0 10px;letter-spacing:-.02em;
+  transition:transform .12s ease;
+}
+.score.pop{transform:scale(1.12)}
+.team.verde .score{color:var(--verde-scuro)}
+.team.rosso .score{color:var(--rosso-scuro)}
+.btns{display:flex;flex-direction:column;gap:8px;margin-top:auto}
+.add{
+  height:62px;border-radius:99px;border:2.5px solid var(--ink);
+  color:#fff;font-size:1.5rem;font-weight:900;
+  box-shadow:4px 4px 0 var(--ink);
+  transition:transform .06s ease, box-shadow .06s ease;
+}
+.team.verde .add{background:var(--verde)}
+.team.rosso .add{background:var(--rosso)}
+.add:active{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--ink)}
+.sub{
+  height:40px;border-radius:99px;border:2px solid rgba(34,32,28,.35);
+  background:transparent;color:rgba(34,32,28,.65);
+  font-size:.95rem;font-weight:700;
+}
+.sub:active{background:rgba(34,32,28,.08)}
+
+/* Parties gagnées : boule en acier */
+.wins{
+  display:flex;align-items:center;justify-content:center;gap:9px;
+  margin-top:14px;padding-top:12px;border-top:2px solid var(--sabbia-scura);
+}
+.wins .label{font-size:.66rem;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:rgba(34,32,28,.55);text-align:left;line-height:1.25}
+.boule{
+  width:42px;height:42px;border-radius:50%;flex:none;
+  border:2.5px solid var(--ink);
+  background:
+    radial-gradient(circle at 32% 26%, #f2f4f6 0 8%, transparent 42%),
+    radial-gradient(circle at 34% 30%, var(--acciaio-1), var(--acciaio-2) 78%);
+  color:#fff;font-weight:900;font-size:1.15rem;
+  display:grid;place-items:center;
+  text-shadow:0 1px 2px rgba(0,0,0,.55);
+  box-shadow:inset -3px -4px 6px rgba(0,0,0,.28), 2px 3px 0 rgba(34,32,28,.5);
+}
+
+/* ---------- Milieu ---------- */
+.mid{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px}
+.cochonnet{
+  width:19px;height:19px;border-radius:50%;border:2px solid var(--ink);
+  background:radial-gradient(circle at 34% 28%, #F2B36B, var(--cochonnet) 72%);
+  box-shadow:2px 2px 0 rgba(34,32,28,.5);
+}
+.vs{font-weight:900;font-size:.82rem;letter-spacing:.1em;color:rgba(34,32,28,.5)}
+
+/* ---------- Contrôles ---------- */
+.controls{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:18px}
+.ghost,.danger{
+  padding:13px 20px;border-radius:99px;font-weight:700;font-size:.92rem;
+  border:2px solid var(--ink);background:#fff;color:var(--ink);
+  box-shadow:3px 3px 0 var(--ink);
+  transition:transform .06s ease, box-shadow .06s ease;
+}
+.ghost:active,.danger:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--ink)}
+.danger{background:transparent;border-color:rgba(126,27,35,.55);color:var(--rosso-scuro);box-shadow:none}
+
+footer{text-align:center;padding:16px 12px 22px;font-size:.72rem;font-weight:600;color:rgba(34,32,28,.45);letter-spacing:.06em}
+
+/* ---------- Victoire ---------- */
+.overlay{
+  position:fixed;inset:0;z-index:50;
+  background:rgba(243,237,223,.97);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;padding:24px;gap:6px;
+}
+.ov-over{font-size:.8rem;font-weight:700;letter-spacing:.4em;text-transform:uppercase;color:rgba(34,32,28,.55)}
+.ov-name{
+  font-family:'Italiana',serif;font-weight:400;
+  font-size:clamp(2.6rem,11vw,4.6rem);line-height:1.05;
+  max-width:92vw;overflow-wrap:anywhere;
+}
+.ov-vittoria{
+  font-weight:900;font-size:clamp(1.4rem,6vw,2rem);
+  letter-spacing:.06em;margin-top:2px;
+}
+.ov-score{font-size:1rem;font-weight:600;color:rgba(34,32,28,.6);margin-top:4px}
+.ov-boules{display:flex;gap:10px;margin:18px 0 6px;align-items:center}
+.ov-boules .boule{width:52px;height:52px;font-size:1.35rem}
+#nextGame{
+  margin-top:16px;padding:16px 30px;border-radius:99px;
+  border:2.5px solid var(--ink);background:var(--ink);color:#fff;
+  font-weight:800;font-size:1.05rem;box-shadow:5px 5px 0 rgba(34,32,28,.35);
+}
+#nextGame:active{transform:translate(2px,2px)}
+.confetti{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+.confetti span{
+  position:absolute;top:-26px;width:10px;height:18px;border-radius:2px;
+  border:1px solid rgba(34,32,28,.35);
+  animation:fall linear forwards;
+}
+@keyframes fall{to{transform:translateY(116vh) rotate(700deg)}}
+@media (prefers-reduced-motion: reduce){
+  .confetti span{animation:none;display:none}
+  .score{transition:none}
+}
+
+@media (min-width:640px){
+  .board{gap:18px}
+  .team{padding:0 18px 20px}
+  .band{margin:0 -18px 14px}
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <p class="overline">Bocce · Pétanque · Famiglia</p>
+  <h1>Lombardi Pétanque</h1>
+  <div class="tricolore" aria-hidden="true"><span></span><span></span><span></span></div>
+  <p class="rule">Première équipe à 13 points</p>
+</header>
+
+<main>
+  <section class="board" aria-label="Tableau des scores">
+
+    <article class="team verde">
+      <div class="band"></div>
+      <input class="name" id="nameA" value="Squadra Verde" maxlength="18" aria-label="Nom de l'équipe verte" enterkeyhint="done">
+      <p class="hint">Toucher pour renommer</p>
+      <div class="score" id="scoreA" aria-live="polite">0</div>
+      <div class="btns">
+        <button class="add" id="addA" aria-label="Ajouter un point à l'équipe verte">+1 point</button>
+        <button class="sub" id="subA" aria-label="Retirer un point à l'équipe verte">−1</button>
+      </div>
+      <div class="wins">
+        <span class="boule" id="winsA">0</span>
+        <span class="label">Parties<br>gagnées</span>
+      </div>
+    </article>
+
+    <div class="mid" aria-hidden="true">
+      <div class="cochonnet"></div>
+      <span class="vs">VS</span>
+    </div>
+
+    <article class="team rosso">
+      <div class="band"></div>
+      <input class="name" id="nameB" value="Squadra Rossa" maxlength="18" aria-label="Nom de l'équipe rouge" enterkeyhint="done">
+      <p class="hint">Toucher pour renommer</p>
+      <div class="score" id="scoreB" aria-live="polite">0</div>
+      <div class="btns">
+        <button class="add" id="addB" aria-label="Ajouter un point à l'équipe rouge">+1 point</button>
+        <button class="sub" id="subB" aria-label="Retirer un point à l'équipe rouge">−1</button>
+      </div>
+      <div class="wins">
+        <span class="boule" id="winsB">0</span>
+        <span class="label">Parties<br>gagnées</span>
+      </div>
+    </article>
+
+  </section>
+
+  <section class="controls">
+    <button class="ghost" id="newGame">Nouvelle partie</button>
+    <button class="danger" id="resetAll">Tout remettre à zéro</button>
+  </section>
+</main>
+
+<footer>Fatto con ♥ — Famiglia Lombardi</footer>
+
+<div class="overlay" id="overlay" hidden>
+  <div class="confetti" id="confetti" aria-hidden="true"></div>
+  <p class="ov-over">Fin de partie</p>
+  <h2 class="ov-name" id="winnerName">—</h2>
+  <p class="ov-vittoria">Vittoria&nbsp;!</p>
+  <p class="ov-score">13 — <span id="loserScore">0</span></p>
+  <div class="ov-boules" aria-hidden="true">
+    <span class="boule" id="ovWinsA">0</span>
+    <span class="vs">·</span>
+    <span class="boule" id="ovWinsB">0</span>
+  </div>
+  <button id="nextGame">Nouvelle partie</button>
+</div>
+
+<script>
+(function(){
+  var state = { a:{score:0,wins:0}, b:{score:0,wins:0} };
+  var MAX = 13;
+
+  var el = function(id){ return document.getElementById(id); };
+  var scoreA=el('scoreA'), scoreB=el('scoreB'),
+      winsA=el('winsA'), winsB=el('winsB'),
+      overlay=el('overlay'), winnerName=el('winnerName'),
+      loserScore=el('loserScore'),
+      ovWinsA=el('ovWinsA'), ovWinsB=el('ovWinsB'),
+      nameA=el('nameA'), nameB=el('nameB');
+
+  function buzz(ms){ if (navigator.vibrate) { try{ navigator.vibrate(ms); }catch(e){} } }
+
+  function pop(node){
+    node.classList.remove('pop');
+    void node.offsetWidth;
+    node.classList.add('pop');
+  }
+
+  function render(){
+    scoreA.textContent = state.a.score;
+    scoreB.textContent = state.b.score;
+    winsA.textContent = state.a.wins;
+    winsB.textContent = state.b.wins;
+    ovWinsA.textContent = state.a.wins;
+    ovWinsB.textContent = state.b.wins;
+  }
+
+  function teamName(t){
+    var input = (t==='a') ? nameA : nameB;
+    var fallback = (t==='a') ? 'Squadra Verde' : 'Squadra Rossa';
+    return input.value.trim() || fallback;
+  }
+
+  function point(t, delta){
+    var s = state[t];
+    var before = s.score;
+    s.score = Math.min(MAX, Math.max(0, s.score + delta));
+    if (s.score !== before){
+      buzz(delta > 0 ? 20 : 10);
+      pop(t==='a' ? scoreA : scoreB);
+    }
+    render();
+    if (before < MAX && s.score === MAX){
+      setTimeout(function(){ win(t); }, 420);
+    }
+  }
+
+  function confetti(){
+    var box = el('confetti');
+    box.innerHTML = '';
+    var colors = ['#00764A', '#FFFFFF', '#CE2B37', '#D9822B'];
+    for (var i=0; i<46; i++){
+      var s = document.createElement('span');
+      s.style.left = (Math.random()*100) + '%';
+      s.style.background = colors[i % colors.length];
+      s.style.animationDelay = (Math.random()*0.7) + 's';
+      s.style.animationDuration = (2.3 + Math.random()*1.9) + 's';
+      box.appendChild(s);
+    }
+  }
+
+  function win(t){
+    var other = (t==='a') ? 'b' : 'a';
+    state[t].wins++;
+    winnerName.textContent = teamName(t);
+    winnerName.style.color = (t==='a') ? 'var(--verde-scuro)' : 'var(--rosso-scuro)';
+    loserScore.textContent = state[other].score;
+    render();
+    overlay.hidden = false;
+    confetti();
+    buzz([40,60,40]);
+  }
+
+  function newGame(){
+    state.a.score = 0;
+    state.b.score = 0;
+    overlay.hidden = true;
+    render();
+  }
+
+  el('addA').addEventListener('click', function(){ point('a', 1); });
+  el('subA').addEventListener('click', function(){ point('a', -1); });
+  el('addB').addEventListener('click', function(){ point('b', 1); });
+  el('subB').addEventListener('click', function(){ point('b', -1); });
+  el('newGame').addEventListener('click', newGame);
+  el('nextGame').addEventListener('click', newGame);
+
+  el('resetAll').addEventListener('click', function(){
+    if (confirm('Remettre les scores ET les parties gagnées à zéro ?')){
+      state = { a:{score:0,wins:0}, b:{score:0,wins:0} };
+      render();
+    }
+  });
+
+  [nameA, nameB].forEach(function(input){
+    input.addEventListener('keydown', function(e){
+      if (e.key === 'Enter'){ input.blur(); }
+    });
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>
