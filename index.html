@@ -217,7 +217,7 @@ footer{text-align:center;padding:16px 12px 22px;font-size:.72rem;font-weight:600
 
     <article class="team verde">
       <div class="band"></div>
-      <input class="name" id="nameA" value="Squadra Verde" maxlength="18" aria-label="Nom de l'équipe verte" enterkeyhint="done">
+      <input class="name" id="nameA" value="Squadra Pasta" maxlength="18" aria-label="Nom de l'équipe verte" enterkeyhint="done">
       <p class="hint">Toucher pour renommer</p>
       <div class="score" id="scoreA" aria-live="polite">0</div>
       <div class="btns">
@@ -237,7 +237,7 @@ footer{text-align:center;padding:16px 12px 22px;font-size:.72rem;font-weight:600
 
     <article class="team rosso">
       <div class="band"></div>
-      <input class="name" id="nameB" value="Squadra Rossa" maxlength="18" aria-label="Nom de l'équipe rouge" enterkeyhint="done">
+      <input class="name" id="nameB" value="Squadra Azzurra" maxlength="18" aria-label="Nom de l'équipe rouge" enterkeyhint="done">
       <p class="hint">Toucher pour renommer</p>
       <div class="score" id="scoreB" aria-live="polite">0</div>
       <div class="btns">
@@ -306,7 +306,7 @@ footer{text-align:center;padding:16px 12px 22px;font-size:.72rem;font-weight:600
 
   function teamName(t){
     var input = (t==='a') ? nameA : nameB;
-    var fallback = (t==='a') ? 'Squadra Verde' : 'Squadra Rossa';
+    var fallback = (t==='a') ? 'Squadra Pasta' : 'Squadra Azzurra';
     return input.value.trim() || fallback;
   }
 
